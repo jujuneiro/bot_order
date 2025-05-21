@@ -19,8 +19,8 @@ func NewBot(botToken string) (newBot Bot, err error) {
 	return
 }
 
-func (b *Bot) SendMessageToChannel(ctx context.Context, phone int, address string, comment string) (err error) {
-	message := fmt.Sprintf("Телефон: %d\nАдрес: %s\nКомментарий: %s", phone, address, comment)
+func (b *Bot) SendMessageToChannel(ctx context.Context, message string) (err error) {
+	message = fmt.Sprintf(message)
 	_, err = b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID: -1002642818193,
 		Text:   message,
