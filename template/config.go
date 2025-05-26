@@ -2,6 +2,8 @@ package plenka_bot
 
 import (
 	"gopkg.in/yaml.v3"
+	"gorm.io/datatypes"
+	"gorm.io/gorm"
 	"os"
 )
 
@@ -22,14 +24,24 @@ type Config struct {
 }
 
 type Order struct {
-	Cart []struct {
-		Product  string `gorm:"column:product;not null" json:"product"`
-		Variants []struct {
-			Color string `gorm:"column:color;not null" json:"color"`
-			Count int    `gorm:"column:count;not null" json:"count"`
-		} `json:"variants"`
-	} `json:"cart"`
-	Name  string `json:"name"`
-	Phone string `gorm:"column:phone;not null" json:"phone"`
-	Email string `json:"email"`
+	gorm.Model
+	Name  string         `gorm:"column:name;not null" json:"name"`
+	Phone string         `gorm:"column:phone;not null" json:"phone"`
+	Email string         `gorm:"column:email;not null" json:"email"`
+	Cart  datatypes.JSON `gorm:"column:cart;type:jsonb;not null" json:"cart"`
+}
+
+type CartProduct struct {
+	Product  string `json:"product"`
+	Variants []struct {
+		Color string `json:"color"`
+		Count int    `json:"count"`
+	} `json:"variants"`
+}
+
+type IncomingOrder struct {
+	Cart  []CartProduct `json:"cart"`
+	Name  string        `json:"name"`
+	Phone string        `json:"phone"`
+	Email string        `json:"email"`
 }
