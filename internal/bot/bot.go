@@ -10,12 +10,12 @@ type Bot struct {
 	*bot.Bot
 }
 
-func NewBot(botToken string) (newBot Bot, err error) {
+func NewBot(botToken string) (newBot *Bot, err error) {
 	b, err := bot.New(botToken)
 	if err != nil {
 		return
 	}
-	newBot.Bot = b
+	newBot = &Bot{Bot: b}
 	return
 }
 
